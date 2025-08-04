@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  app-prod:
+    build:
+      context: .
+      target: production
+    ports:
+      - "8001:8000"
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=production
+    profiles:
+      - production
+
+  test:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+    command: pytest tests/ -v --cov=app --cov-report=html --cov-report=term-missing
+    profiles:
+      - test
+
+  lint:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+    command: |
+      sh -c "
+        flake8 app/ tests/ --max-line-length=88 --extend-ignore=E203,W503 &&
+        black --check --diff app/ tests/ &&
+        isort --check-only --diff app/ tests/ &&
+        mypy app/ --ignore-missing-imports
+      "
+    profiles:
+      - lint
+
+  security:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+    command: |
+      sh -c "
+        bandit -r app/ &&
+        safety check
+      "
+    profiles:
+      - security 

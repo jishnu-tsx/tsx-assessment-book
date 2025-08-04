@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.services.storage import storage
 
-
 @pytest.fixture
 def client() -> TestClient:
     """Provide a test client for the FastAPI application."""
