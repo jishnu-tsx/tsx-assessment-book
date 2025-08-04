@@ -136,7 +136,7 @@ class BookResponse(BaseModel):
         None, description="List of tags for the book eg:[fiction,comedy]"
     )
     created_at: datetime = Field(..., description="Timestamp when the book was created")
-
+    updated_at: datetime = Field(..., description="Timestamp when the book was last updated")
 
     @classmethod
     def from_book(cls, book: Book) -> "BookResponse":
