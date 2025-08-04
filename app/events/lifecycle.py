@@ -4,6 +4,8 @@ import glob
 from contextlib import asynccontextmanager
 from pathlib import Path
 
+from app.utils.logger import configure_logging
+
 log = structlog.get_logger()
 
 
@@ -54,6 +56,9 @@ async def clear_old_logs():
 async def lifespan(app):
     """Handle startup and shutdown events."""
     # Startup
+    await clear_old_logs()
+
+    configure_logging()
     await startup_tasks()
 
     yield

@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from app.utils.config import settings
-from app.utils.logger import configure_logging
 import structlog
 
 from app.utils.exceptions import validation_exception_handler, general_exception_handler
