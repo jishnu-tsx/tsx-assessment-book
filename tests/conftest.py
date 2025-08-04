@@ -5,9 +5,10 @@ from app.services.storage import storage
 
 
 @pytest.fixture
-def client():
-    """Create a test client"""
-    return TestClient(app)
+def client() -> TestClient:
+    """Provide a test client for the FastAPI application."""
+    with TestClient(app) as test_client:
+        yield test_client
 
 
 @pytest.fixture(autouse=True)
