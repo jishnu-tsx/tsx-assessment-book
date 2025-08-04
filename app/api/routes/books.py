@@ -3,12 +3,28 @@ import uuid
 from typing import List, Optional
 from pydantic import ValidationError
 
+import requests
+
 from app.models.book_models import Book, BookCreate, BookUpdate, BookResponse
 from app.services.storage import storage, book_to_response
 from app.utils.logger import logger
 from app.utils.exceptions import create_error_response
 
+
 router = APIRouter()
+
+@router.get("/random-number")
+def random_number():
+    url = "https://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=5"
+    response = requests.get(url)
+    return response.json()
+
+@router.get("/random-number-sum")
+def random_number_sum():
+    url = "https://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=5"
+    response = requests.get(url)
+    print(f"\n\n\nSum of random: {sum(response.json())}\n\n\n")
+    return sum(response.json())
 
 
 @router.post(

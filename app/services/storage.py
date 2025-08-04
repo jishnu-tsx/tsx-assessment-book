@@ -173,6 +173,8 @@ def book_to_response(book: Book) -> BookResponse:
             published_year=book.published_year,
             price=book.price,
             tags=getattr(book, "tags", None),  # Handle optional tags
+            created_at=book.created_at,
+            updated_at=book.updated_at,
         )
 
         logger.debug(f"Book converted to response format: {book.id}")

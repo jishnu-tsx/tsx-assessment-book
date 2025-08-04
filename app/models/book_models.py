@@ -16,6 +16,8 @@ class Book:
     published_year: int
     price: float
     tags: Optional[List[str]] = None
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
 
     @field_validator("title", "author")
     @classmethod
@@ -128,11 +130,13 @@ class BookResponse(BaseModel):
     id: str = Field(..., description="Unique Identifier of the book")
     title: str = Field(..., description="Titile of the book")
     author: str = Field(..., description="Author of the book")
-    published_year: int = Field(..., description="Year the book was published")
+    published_year: int = Field(..., description="Year the book was published", example="1925")
     price: float = Field(..., description="Price of the book in INR")
     tags: Optional[List[str]] = Field(
         None, description="List of tags for the book eg:[fiction,comedy]"
     )
+    created_at: datetime = Field(..., description="Timestamp when the book was created")
+    updated_at: datetime = Field(..., description="Timestamp when the book was last updated")
 
     @classmethod
     def from_book(cls, book: Book) -> "BookResponse":
