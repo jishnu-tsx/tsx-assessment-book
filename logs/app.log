@@ -1,4 +1,0 @@
-{"event": "Application startup", "logger": "app.events.lifecycle", "level": "info", "timestamp": "2025-08-04 12:47:31"}
-{"event": "Could not remove log file logs\\app.log: [WinError 32] The process cannot access the file because it is being used by another process: 'logs\\\\app.log'", "logger": "app.events.lifecycle", "level": "warning", "timestamp": "2025-08-04 12:47:31"}
-{"event": "Log cleanup completed", "logger": "app.events.lifecycle", "level": "info", "timestamp": "2025-08-04 12:47:31"}
-{"event": "Application shutdown", "logger": "app.events.lifecycle", "level": "info", "timestamp": "2025-08-04 12:47:46"}
